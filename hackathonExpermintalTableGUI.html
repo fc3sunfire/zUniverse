@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>GenInsight - Mainframe Login</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+
+</head>
+
+<body class="w3-light-grey">
+    
+    <div class="w3-container">
+        <table class="w3-border">
+            <tr>
+                <td id="topLeft" ondrop="drop(event)" ondragover="allowDrop(event)" class="w3-center"><div id="icon1" draggable="true" ondragstart="drag(event)"><img src="icon1.png"><br><span>WWWWWWWW</span></div></td>
+                <td id="topRight" ondrop="drop(event)" ondragover="allowDrop(event)" class="w3-center"></td>
+            </tr>
+            <tr>
+                <td id="bottomLeft" ondrop="drop(event)" ondragover="allowDrop(event)" class="w3-center"></td>
+                <td id="bottomRight" ondrop="drop(event)" ondragover="allowDrop(event)" class="w3-center"><div id="icon2" draggable="true" ondragstart="drag(event)"><img src="icon2.png"><br><span>HHHHHHHH</span></div></td>
+            </tr>
+        </table>
+    </div>
+    
+<script>
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+    
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+    
+    function drop(ev) {
+        ev.preventDefault();
+        let data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+    }
+</script>    
+</body>
+</html>
+
+
+

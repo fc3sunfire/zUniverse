@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>GenInsight</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="chatBubble04NOV23.css">
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+    table {border-collapse: collapse; border-spacing: 0; padding: 0;}
+.w3-table td, .w3-table th {
+            padding: 1px;
+            margin: 0;
+            width: 0;
+            height: 1.0em; 
+            line-height: 1.0em;
+            text-align: center;
+            font-family: monospace;
+            font-size: 12px;
+            border-spacing: 0px;
+        }
+    tr {
+        padding: 0;
+            margin: 0;
+        border-spacing: 0;
+        
+    }
+</style>
+<!--External Javascript included after <body> tag-->
+</head>
+<body class="w3-light-grey" style="margin-top: 43px;">
+    
+    <!-- DO NOT FORGET TO USE THE Right-click context menu to our advantage -->
+    
+    <div class="w3-third">
+        <!-- GEN AI CHAT -->
+        <!-- AI Response Textbox id= txtAreaAIResponse -->
+        <!-- AI Question Prompt id= txtAIQuestionPrompt -->
+        <!-- Use the hackathonChatTest.html as a chatbot (bubble template) -->
+        <!-- Needs to be collapsable to the right? -->
+        <!--<form action="#" class="w3-container w3-card-4 w3-text-blue w3-margin">-->
+            <div class="w3-container w3-card-4 w3-margin chat-container">
+                <div class="w3-cell-row w3-card-2">
+                    <button class="w3-btn w3-blue w3-quarter" onClick="#">GenAI</button>
+                    <button class="w3-btn w3-blue w3-quarter" onClick="#">Tech Docs</button>
+                    <button class="w3-btn w3-blue w3-quarter" onClick="#">Quick Ref</button>
+                    <button class="w3-btn w3-blue w3-quarter" onClick="#">FAQs</button>
+                </div>
+                <div class="chat-content w3-cell-row">
+                    <!-- Chat messages will appear here -->
+                </div>
+                <div class="w3-cell-row">
+                    <input type="text" id="chatInput" class="w3-input w3-border w3-round-large w3-threequarter" placeholder="Type your prompt...">
+                    <button class="w3-button w3-blue w3-round-large w3-cell w3-quarter" onclick="sendMessage()"><i class="w3-large fa fa-send-o"></i></button>
+                </div>
+                <p></p>
+
+                <div class="w3-cell-row">
+                    <!-- Save chat to computer -->
+                    <button class="w3-button w3-white w3-round-large w3-border w3-quarter" onClick="#"><i class="fa fa-download"></i></button>
+                    <!-- Clear chat prompt -->
+                    <button class="w3-button w3-white w3-round-large w3-border w3-quarter" onClick="#"><i class="fa fa-eraser"></i></button>
+                    <!-- Seach chat text -->
+                    <button class="w3-button w3-white w3-round-large w3-border w3-quarter" onClick="#"><i class="fa fa-search"></i></button>
+                    <!-- Resubmit the prompt again -->
+                    <button class="w3-button w3-white w3-round-large w3-border w3-quarter" onClick="#"><i class="fa fa-refresh"></i></button>
+                </div>
+            </div>
+        <!--</form>-->
+    </div>
+    
+<script>
+    
+function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const chatContent = document.querySelector('.chat-content');
+    
+    // Add user's message to chat
+    const userMessage = document.createElement('div');
+    userMessage.className = 'chat-bubble chat-bubble-user';
+    userMessage.textContent = input.value;
+    chatContent.appendChild(userMessage);
+
+    // Simulate a bot reply
+    setTimeout(() => {
+        const botReply = document.createElement('div');
+        botReply.className = 'chat-bubble chat-bubble-bot';
+        botReply.textContent = 'Hello, I am the bot!';
+        chatContent.appendChild(botReply);
+    }, 1000);
+
+    // Clear the input and scroll to the bottom
+    input.value = '';
+    chatContent.scrollTop = chatContent.scrollHeight;
+}
+    
+</script>
+</body>
+</html>

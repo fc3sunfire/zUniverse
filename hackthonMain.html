@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>GenInsight</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="hackthonMain.css">
+<link rel="stylesheet" href="chatBubble.css">
+<link rel="stylesheet" href="tooltip.css">
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+    table {border-collapse: collapse; border-spacing: 0; padding: 0;}
+.w3-table td, .w3-table th {
+            padding: 1px;
+            margin: 0;
+            width: 0;
+            height: 1.0em; 
+            line-height: 1.0em;
+            text-align: center;
+            font-family: monospace;
+            font-size: 18px;
+            border-spacing: 0px;
+        }
+    tr {
+        padding: 0;
+            margin: 0;
+        border-spacing: 0;
+        
+    }
+/* Overriding original w3-check to smaller size */
+/* Probably need a ratio scaling to make sure static is not too small */
+/* Move to inline, so we can dynamically change width/height based on user settings */
+.w3-check,.w3-radio {
+    width:8px;
+    height:8px;
+    position:relative;
+    top:0px;
+}
+    
+</style>
+<!--External Javascript included after <body> tag-->
+</head>
+
+<body class="w3-light-grey" style="margin-top: 43px;" id="mainBody">
+    <!-- Top container -->
+    <div class="w3-bar w3-top w3-red w3-large" style="z-index:4">
+        <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+        <span class="w3-bar-item w3-right" id="appNameHeader">GenInsight</span>
+    </div>
+<!-- Sidebar/menu -->
+    <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:75px;" id="sidebar"><br>
+        <div class="w3-bar-block">
+            <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+            <!-- Sidebar Icons -->    <!-- Sidebar with dropdown (hover)-->
+            <!-- -->
+            <button class="w3-bar-item w3-button w3-xlarge w3-padding" onMouseOver=""><i class="fa fa-bars fa-fw"></i></button>
+            <button class="w3-bar-item w3-button w3-xlarge w3-padding" onMouseOver=""><i class="fa fa-user-circle-o  fa-fw"></i></button>
+            <button class="w3-bar-item w3-button w3-xlarge w3-padding" onClick=""><i class="fa fa-home fa-fw"></i></button>
+            <button class="icon-btn" onClick=""><i class="fa fa-comment-o fa-fw"></i></button>
+            <button class="w3-bar-item w3-button w3-xlarge w3-padding" onMouseOver=""><i class="fa fa-gears fa-fw"></i></button>
+            <button class="w3-bar-item w3-button w3-xlarge w3-padding" onMouseOver=""><i class="fa fa-sitemap fa-fw"></i></button>
+            <br><br>
+        </div>
+    </nav>
+<!-- END Sidebar/menu -->
+    
+    <!-- PAGE CONTENT -->
+    <div class="w3-container w3-black" style="margin-left:50px; height:100vh; margin-top: 43px;">
+        
+        <!-- TOOLTIP Website: https://www.w3schools.com/css/css_tooltip.asp -->
+        
+        <!-- PF Keys, which on be default, but can be toggled off -->
+        <!-- using the margin-left: 50px to line up with 3270 -->
+        <div style="margin-left: 50px;" id="pfKeyDivTop"></div>
+        <div style="margin-left: 50px;" id="screenTabTop"></div>
+        
+        <!-- More of this needs to be dynamically created in Javascript -->
+        
+        <div class="w3-row-padding">
+            <div class="w3-twothird"> <!-- was w3-twothird -->
+                <!-- ISPF Window-->
+                <div class="w3-container"> <!-- Probably where we need to figure out multiple screens -->
+                    <table id="dynamicTable" class="w3-table">
+                        
+                    </table>
+                </div>
+            </div>
+            <div class="w3-third"> <!-- was w3-third --> <!---style="visibility: hidden"-----UNHIDE , Right-sidebar?-->
+                <!-- GEN AI CHAT -->
+                <!-- AI Response Textbox id= txtAreaAIResponse -->
+                <!-- AI Question Prompt id= txtAIQuestionPrompt -->
+                <!-- Use the hackathonChatTest.html as a chatbot (bubble template) -->
+                <!-- Needs to be collapsable to the right? -->
+                <div class="w3-container w3-card-4 w3-margin chat-container w3-border w3-border-white"> <!-- was w3-white -->
+                    <div class="w3-cell-row">
+                        <h4 class="w3-center"><b>Ask Turing</b></h4>
+                        <!-- Dont think we want buttons, just a name for the chatbot -->
+                        <!--<button class="w3-btn w3-blue w3-quarter" onClick="#">GenAI</button>-->
+                        <!--<button class="w3-btn w3-blue w3-quarter" onClick="#">Tech Docs</button>-->
+                        <!--<button class="w3-btn w3-blue w3-quarter" onClick="#">Quick Ref</button>-->
+                        <!--<button class="w3-btn w3-blue w3-quarter" onClick="#">FAQs</button>-->
+                    </div>
+                    <div class="w3-container w3-cell-row">
+                        <div id="chatWindow" class="" style="height: 430px; overflow-y: scroll;">
+                            <!-- Chat messages will appear here -->
+                        </div>
+                    </div>
+                    <div class="w3-cell-row"> <!-- fa fa-stop-circle-o -->
+                        <input type="text" id="userInput" class="w3-input w3-border w3-round-large w3-threequarter" placeholder="Type your prompt...">
+                        <button class="w3-button w3-blue w3-round-large w3-cell w3-quarter" id="turingSubmit" onclick="sendMessage('user', document.getElementById('userInput').value)"><i class="w3-large fa fa-send-o"></i></button>
+                    </div>
+                    <p></p>
+
+                    <div class="w3-cell-row w3-bar"> <!-- temporary for now -->
+                        <!-- Copy/Paste? -->
+                        <!-- Save chat to computer -->
+                        <button class="w3-button w3-white w3-round-large w3-border w3-quarter" onClick="#"><i class="fa fa-download"></i></button>
+                        <!-- Clear chat prompt -->
+                        <button class="w3-button w3-white w3-round-large w3-border w3-quarter" onClick="clearChat()"><i class="fa fa-eraser"></i></button>
+                        <!-- Seach chat text -->
+                        <button class="w3-button w3-white w3-round-large w3-border w3-quarter" onClick="#"><i class="fa fa-search"></i></button>
+                        <!-- Resubmit the prompt again -->
+                        <button class="w3-button w3-white w3-round-large w3-border w3-quarter" onClick="#"><i class="fa fa-refresh"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+    
+    <!-- PF Keys, which on be default, but can be toggled off -->
+    <!-- using the margin-left: 50px to line up with 3270 -->
+    <div style="margin-left: 50px;" id="screenTabBot"></div>
+    <div style="margin-left: 50px;" id="pfKeyDivBot"></div>
+    <footer class="w3-container"></footer>
+
+    <!--<script src="hackthonMain.js"></script>-->
+    <script src="hackthonMain.js"></script>
+    
+<script>
+
+// Call main() to kick off the Javascript
+main().catch(error => {
+    console.error("Error in main:", error);
+});
+
+
+/*********************************************
+* HTML GUI Related JS 
+* This is meant to keep the PFKeys at the top
+*TODO: need a bottom version still
+*********************************************/
+// When the user scrolls the page, execute myFunction
+window.onscroll = function() {myFunction()};
+
+// Get the header
+let header = document.getElementById("pfKeyDivTop");
+
+// Get the offset position of the navbar
+let sticky = header.offsetTop - 43;
+
+// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+function myFunction() {
+  if (window.pageYOffset > sticky) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
+    
+    
+</script>
+</body>
+</html>

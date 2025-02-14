@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>GenInsight - Mainframe Login</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+    body {
+        background-image: url("hackathonLoginBackground.jpg");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+    }
+    /* Password field */
+    .password-wrapper {
+        position: relative;
+        width: 200px;
+    }
+    /* This will make space for the eye icon */
+    #tsoPasswordId {
+        width: 100%;
+        padding-right: 35px; 
+    }
+    /* This is placing the icon in the input field */
+    #togglePassword {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+</style>
+<script src="hackathonLogin.js"></script>
+</head>
+
+<body class="w3-black">
+    <!-- Creates the black background 'form' as modal  -->
+    <!--TODO: Need to test different screen sizes to be sure, but using percents should be good -->
+    <div class="w3-modal-content w3-container w3-card-4 w3-black w3-center w3-animate-zoom" style="width:20%; margin-top: 10%; opacity: 90%;">
+        <h3 class="w3-center">GenInsight</h3> <!-- maybe a better font? -->
+        <table width="100%">
+            <tr>
+                <td colspan="2"><input class="w3-input" type="text" autofocus placeholder="TSO User Id" id="tsoUserId"></td>
+            </tr>
+            <tr>
+                <td class="password-wrapper" colspan="2"><input class="w3-input" type="password" placeholder="TSO Password" id="tsoPasswordId"><i class="fa fa-eye" style="color: black; font-size: 20px;" id="togglePassword"></i></td>
+            </tr>
+            <tr>
+                <td class="w3-left" width="50%"><button style="width: 100%" class="w3-btn w3-round-xlarge w3-blue" onClick="login()">Login</button></td>
+                <td class="w3-right" width="50%"><button style="width: 100%" class="w3-btn w3-round-xlarge w3-red" onClick="cancel()">Cancel</button></td>
+            </tr>
+            <tr> <!-- May or may not want to include -->
+                <td style="visibility: hidden"><a href="#">Login help</a></td>
+            </tr>
+        </table>
+        <!-- Do we need anything else legal? -->
+        <p class="w3-center">&copy; Copyright 2023</p>
+    </div>
+    
+<script>
+    
+    /* This is creating the event listener in the password input field and it will
+       toggle the type of input field and toggle the 'eye' icon                 */
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        let passwordInput = document.getElementById('tsoPasswordId');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text'; // Change the input type to text so the letters are visible
+            this.classList.remove('fa-eye');
+            this.classList.add('fa-eye-slash'); // switch to the "eye-slash" icon
+        } else {
+            passwordInput.type = 'password'; // Change the input type to password to hide the letters
+            this.classList.add('fa-eye');
+            this.classList.remove('fa-eye-slash'); // switch back to the "eye" icon
+        }
+    });
+    
+
+</script>
+</body>
+</html>

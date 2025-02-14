@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+
+<div class="w3-container">
+    <div id="chatWindow" class="w3-border" style="height: 300px; overflow-y: scroll;">
+        <!-- Chat messages will be added here -->
+    </div>
+    <input type="text" id="userInput" class="w3-input" placeholder="Type a message...">
+    <button onclick="sendMessage()" class="w3-button w3-blue">Send</button>
+</div>
+
+<script>
+    
+function sendMessage() {
+    var input = document.getElementById("userInput");
+    var message = input.value;
+    if (message) {
+        appendMessage("user", message);
+        input.value = '';
+
+        // Simulate bot response
+        setTimeout(function() {
+            appendMessage("bot", "This is a simulated response.");
+        }, 1000);
+    }
+}
+
+function appendMessage(sender, message) {
+    var chatWindow = document.getElementById("chatWindow");
+    var msgElement = document.createElement("div");
+
+    msgElement.className = sender === "user" ? "w3-right-align" : "w3-left-align";
+    msgElement.innerHTML = `<div class="w3-panel w3-round w3-border">${message}</div>`;
+
+    chatWindow.appendChild(msgElement);
+
+    // Scroll to the bottom
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+    
+    
+</script>
+</body>
+</html>

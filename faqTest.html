@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+
+<div class="w3-container">
+    <h2>FAQ Management System</h2>
+
+    <!-- Search Box -->
+    <input class="w3-input w3-border" type="text" id="searchBox" placeholder="Search FAQs" onkeyup="searchFAQs()">
+
+    <!-- FAQ Display -->
+    <ul class="w3-ul w3-card-4" id="faqList"></ul>
+
+    <!-- FAQ Form -->
+    <div class="w3-container w3-padding">
+        <label>Title</label>
+        <input class="w3-input" type="text" id="faqTitle">
+
+        <label>Content</label>
+        <textarea class="w3-input" id="faqContent"></textarea>
+
+        <button class="w3-btn w3-blue" onclick="saveFAQ()">Save FAQ</button>
+    </div>
+</div>
+
+<script>
+    
+let faqs = JSON.parse(localStorage.getItem('faqs')) || [];
+
+function saveFAQ() {
+    const title = document.getElementById('faqTitle').value;
+    const content = document.getElementById('faqContent').value;
+
+    // Check if FAQ exists and update
+    const existingIndex = faqs.findIndex(faq => faq.title === title);
+    if (existingIndex > -1) {
+        faqs[existingIndex] = { title, content };
+    } else {
+        faqs.push({ title, content });
+    }
+
+    localStorage.setItem('faqs', JSON.stringify(faqs));
+    displayFAQs();
+    clearForm();
+}
+
+function editFAQ(title) {
+    const faq = faqs.find(f => f.title === title);
+    document.getElementById('faqTitle').value = faq.title;
+    document.getElementById('faqContent').value = faq.content;
+}
+
+function deleteFAQ(title) {
+    faqs = faqs.filter(faq => faq.title !== title);
+    localStorage.setItem('faqs', JSON.stringify(faqs));
+    displayFAQs();
+}
+
+function searchFAQs() {
+    const searchText = document.getElementById('searchBox').value.toLowerCase();
+    displayFAQs(faqs.filter(faq => faq.title.toLowerCase().includes(searchText)));
+}
+
+function displayFAQs(filteredFaqs = faqs) {
+    const faqList = document.getElementById('faqList');
+    faqList.innerHTML = '';
+
+    filteredFaqs.forEach(faq => {
+        faqList.innerHTML += `
+            <li class="w3-padding-16">
+                <span onclick="deleteFAQ('${faq.title}')" class="w3-button w3-red w3-small w3-right">Delete</span>
+                <span onclick="editFAQ('${faq.title}')" class="w3-button w3-green w3-small w3-right">Edit</span>
+                <strong>${faq.title}</strong><br>
+                <span>${faq.content}</span>
+            </li>
+        `;
+    });
+}
+
+function clearForm() {
+    document.getElementById('faqTitle').value = '';
+    document.getElementById('faqContent').value = '';
+}
+
+// Initial display of FAQs
+displayFAQs();
+
+    
+    
+</script> <!-- Link to your JavaScript file -->
+
+    
+</body>
+</html>
+

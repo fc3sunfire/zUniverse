@@ -1,0 +1,77 @@
+@charset "utf-8";
+/* CSS Document */
+/* Supplement to w3.css */
+#sidebar {
+    width: 75px;
+    background: #eee;
+    padding: 10px 0;
+    position: relative;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    width: 100%;
+    padding: 10px;
+}
+
+.menu {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 75px;
+    background: #ccc;
+    padding: 10px;
+    width: 200px;
+}
+
+.menu label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.menu input {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+/* Used to underline a clickable text field */
+.highlightText {
+    /*text-decoration: underline;*/
+    /* background? */
+}
+
+/* Used to keep header/footers 'sticky' */
+/* Style the header */
+.header {
+  padding: 10px 16px;
+  /*background: #555;
+  color: #f1f1f1;*/
+}
+
+/* Page content */
+.content {
+  padding: 16px;
+}
+
+/* The sticky class is added to the header with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 43;
+  width: 100%
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+  padding-top: 102px;
+}
+
+
+
+
+
+
+
+

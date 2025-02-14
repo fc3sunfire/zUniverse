@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot with FAQ</title>
+    
+    <style>
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.chat-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.faq-container, .chatbox {
+    width: 48%;
+    border: 1px solid #ccc;
+    margin: 10px;
+    padding: 10px;
+}
+
+.output {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+#chat-input {
+    width: calc(100% - 60px);
+    padding: 10px;
+}
+
+#send-btn {
+    width: 50px;
+    padding: 10px;
+}
+
+.faq-list {
+    height: 300px;
+    overflow-y: auto;
+}
+
+.faq-list div {
+    padding: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.faq-highlight {
+    background-color: yellow;
+}
+
+    
+    </style>
+    
+</head>
+<body>
+    <div class="chat-container">
+        <div id="faq-container" class="faq-container">
+            <!-- FAQ Section -->
+            <h2>FAQs</h2>
+            <div id="faq-list" class="faq-list">
+                <!-- FAQs will be populated here -->
+            </div>
+        </div>
+        <div class="chatbox">
+            <div id="chat-output" class="output"></div>
+            <input type="text" id="chat-input" placeholder="Ask a question...">
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+    
+<script>
+   
+// Initial FAQ data
+let faqs = [
+    { question: "How do I log in to the mainframe?", answer: "Use your provided credentials to log in through the terminal interface." },
+    // ... add the rest of your FAQs
+];
+
+// Populate the FAQs on load
+window.onload = function() {
+    const faqList = document.getElementById('faq-list');
+    faqs.forEach(faq => {
+        const faqDiv = document.createElement('div');
+        faqDiv.textContent = faq.question;
+        faqDiv.onclick = () => alert(faq.answer);
+        faqList.appendChild(faqDiv);
+    });
+};
+
+// Send message to chatbot
+document.getElementById('send-btn').onclick = function() {
+    const input = document.getElementById('chat-input');
+    const output = document.getElementById('chat-output');
+    const message = input.value;
+    input.value = '';
+
+    // Search FAQ
+    searchFAQ(message);
+
+    // Assuming you have a backend route `/api/chat` to handle OpenAI API requests
+    fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message: message })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const responseDiv = document.createElement('div');
+        responseDiv.textContent = data.response;
+        output.appendChild(responseDiv);
+    });
+};
+
+// Search through the FAQs based on the input
+function searchFAQ(input) {
+    const inputWords = input.split(' ');
+    const faqList = document.querySelectorAll('#faq-list div');
+
+    faqList.forEach(faqDiv => {
+        const matchedWords = faqDiv.textContent.split(' ').filter(word => inputWords.includes(word));
+        if (matchedWords.length / faqDiv.textContent.split(' ').length >= 0.5) {
+            faqDiv.classList.add('faq-highlight');
+        } else {
+            faqDiv.classList.remove('faq-highlight');
+        }
+    });
+}
+
+    
+</script>
+</body>
+</html>

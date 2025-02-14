@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Hackathon</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        body, table {
+            font-family: "Courier New", Courier, monospace;
+        }
+        header {
+            height: 15%;
+            background-color: #4CAF50;
+        }
+        main {
+            height: 100%;
+            overflow: auto;
+        }
+        aside {
+            height: 100%;
+            width: 200px;
+            position: fixed;
+            background: lightblue;
+        }
+        .icons {
+            color: white;
+            padding: 8px;
+            display: block;
+        }
+        table {
+            width: 100%;
+            height: 50vh;
+            border-collapse: inherit;
+        }
+        td {
+            border: 1px solid #ddd;
+            padding: 0px;
+            width: 1ch;
+            height: 1.0em; 
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.0em;
+            white-space: nowrap;
+            border-collapse: inherit;
+        }
+    </style>
+</head>
+<body class="w3-light-grey">
+    <header class="w3-container w3-teal">
+        <h1>Header Section</h1>
+    </header>
+    <aside class="w3-sidebar w3-bar-block w3-collapse w3-card w3-animate-left" style="width:200px;" id="mySidebar">
+        <button class="w3-bar-item w3-button w3-large w3-hide-large" onclick="w3_close()">Close &times;</button>
+        <a href="#" class="icons">Icon 1</a>
+        <a href="#" class="icons">Icon 2</a>
+        <!-- Add more icons as needed -->
+    </aside>
+    <main class="w3-main" style="margin-left:200px">
+        <table id="dynamicTable" class="w3-table-all">
+            <!-- Table content will be inserted here via JavaScript -->
+        </table>
+    </main>
+    <script>
+        function generateTable(rows, cols) {
+            let table = document.getElementById('dynamicTable');
+            let tableHtml = "";
+            for(let i = 0; i < rows; i++) {
+                tableHtml += "<tr>";
+                for(let j = 0; j < cols; j++) {
+                    tableHtml += "<td onclick='cellClicked(" + i + ", " + j + ")'>&nbsp;</td>"; // Add click event
+                }
+                tableHtml += "</tr>";
+            }
+            table.innerHTML = tableHtml;
+        }
+        
+        function updateCell(row, col, content) {
+            console.log("updatedCell(" + row + "," + col + "," + content + ")");
+            let table = document.getElementById('dynamicTable');
+            if(row >= 0 && col >= 0 && row < table.rows.length && col < table.rows[0].cells.length) {
+                console.log("content for cell=" + content);
+                table.rows[row].cells[col].innerHTML = content;
+            }
+        }
+
+        
+        function cellClicked(row, col) {
+            let newContent = prompt("Enter new content for the cell:", "");
+            if(newContent !== null) {
+                updateCell(row, col, newContent);
+            }
+        }
+
+        //generateTable(24, 80);
+        //put the mouse location in the console
+        document.addEventListener('DOMContentLoaded', (event) => {
+            generateTable(24, 80);
+            let table = document.getElementById('dynamicTable');
+
+            let mouseMoveTimeout;
+            table.addEventListener('mousemove', function(event) {
+                clearTimeout(mouseMoveTimeout);  // Clearing timeout on each mouse move
+
+                mouseMoveTimeout = setTimeout(() => {
+                    // Fetching cell info when mouse stops moving for 500ms
+                    let cell = event.target;
+                    if(cell.tagName === 'TD') {
+                        let row = cell.parentNode.rowIndex;
+                        let col = cell.cellIndex;
+                        console.log(`Mouse stopped over cell: [${row}, ${col}]`);
+                    }
+                }, 500);  // 500ms delay to check for stop in movement
+            });
+            createIspf();
+        });
+            
+        let menuData = {
+              VER: '0100',
+              NME: 'ISR@PRIM',
+              SCR: '1',
+              HDL: '001184802945',
+              RWS: 24,
+              CLS: 80,
+              TLE: 'ISPF Primary Option Menu',
+              CML: 'ASIS',
+              CUR: { ROW: 4, CLM: 14 },
+              IFY: { SYS: '', UID: '' },
+              MSG: {
+                ID: 'ISRLO999',
+                TYP: 'N',
+                HLP: 'FALSE',
+                LEN: 347,
+                TXT: 'Licensed Materials - Property of IBM                                        5650-ZOS     Copyright IBM Corp. 1980, 2019.                                US Government Users Restricted Rights -                                     Use, duplication or disclosure restricted                                   by GSA ADP Schedule Contract with IBM Corp.'
+              },
+              ARE: [
+                { NME: 'TMPROWS', TYP: 'D', TOP: 6, BOT: 16, LFT: 58, RGT: 78 },
+                { NME: 'SAREA39', TYP: 'S', TOP: 5, BOT: 22, LFT: 1, RGT: 56 }
+              ],
+              CHA: [
+                { COL: 'WHITE' },
+                { COL: 'RED' },
+                { COL: 'BLUE' },
+                { COL: 'GREEN' },
+                { COL: 'PINK' },
+                { COL: 'YELLOW' },
+                { COL: 'AQUA' },
+                { COL: 'WHITE', HIL: 'RVIDEO' },
+                { COL: 'RED', HIL: 'RVIDEO' },
+                { COL: 'BLUE', HIL: 'RVIDEO' },
+                { COL: 'GREEN', HIL: 'RVIDEO' },
+                { COL: 'PINK', HIL: 'RVIDEO' },
+                { COL: 'YELLOW', HIL: 'RVIDEO' },
+                { COL: 'AQUA', HIL: 'RVIDEO' }
+              ],
+              MNU: [
+                { PUL: ' Menu', CHS: [Array] },
+                { PUL: ' Utilities', CHS: [Array] },
+                { PUL: ' Compilers', CHS: [Array] },
+                { PUL: ' Options', CHS: [Array] },
+                { PUL: ' Status', CHS: [Array] },
+                { PUL: ' Help', CHS: [Array] }
+              ],
+              FLD: [
+                {
+                  T: 'T',
+                  Y: 3,
+                  X: 29,
+                  C: 'BLUE',
+                  I: 'LOW',
+                  L: 24,
+                  D: 'ISPF Primary Option Menu'
+                },
+                {
+                  T: 'T',
+                  Y: 4,
+                  X: 2,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 11,
+                  D: 'Option ===>'
+                },
+                {
+                  T: 'I',
+                  Z: 'TRUE',
+                  Y: 4,
+                  X: 14,
+                  C: 'AQUA',
+                  I: 'LOW',
+                  H: 'USCORE',
+                  L: 66,
+                  N: 'ZCMD',
+                  D: ''
+                },
+                { T: 'T', Y: 6, X: 2, C: 'WHITE', I: 'LOW', L: 1, D: '0' },
+                {
+                  T: 'P',
+                  Y: 6,
+                  X: 5,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 13,
+                  N: '0PS-6-5',
+                  D: 'Settings     '
+                },
+                {
+                  T: 'T',
+                  Y: 6,
+                  X: 19,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 28,
+                  D: 'Terminal and user parameters'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 6,
+                  X: 59,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 1,
+                  N: '0PS-6-59',
+                  D: '<'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 6,
+                  X: 65,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 12,
+                  N: '0PS-6-61',
+                  D: 'Calendar    '
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 6,
+                  X: 78,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 1,
+                  N: '0PS-6-78',
+                  D: '>'
+                },
+                { T: 'T', Y: 7, X: 2, C: 'WHITE', I: 'LOW', L: 1, D: '1' },
+                {
+                  T: 'P',
+                  Y: 7,
+                  X: 5,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 13,
+                  N: '0PS-7-5',
+                  D: 'View         '
+                },
+                {
+                  T: 'T',
+                  Y: 7,
+                  X: 19,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 31,
+                  D: 'Display source data or listings'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 7,
+                  X: 62,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 9,
+                  N: '0PS-7-62',
+                  D: 'October  '
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 7,
+                  X: 72,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 4,
+                  N: '0PS-7-72',
+                  D: '2023'
+                },
+                { T: 'T', Y: 8, X: 2, C: 'WHITE', I: 'LOW', L: 1, D: '2' },
+                {
+                  T: 'P',
+                  Y: 8,
+                  X: 5,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 13,
+                  N: '0PS-8-5',
+                  D: 'Edit         '
+                },
+                {
+                  T: 'T',
+                  Y: 8,
+                  X: 19,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 28,
+                  D: 'Create or change source data'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 8,
+                  X: 59,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-8-59',
+                  D: 'Su'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 8,
+                  X: 62,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-8-62',
+                  D: 'Mo'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 8,
+                  X: 65,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-8-65',
+                  D: 'Tu'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 8,
+                  X: 68,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-8-68',
+                  D: 'We'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 8,
+                  X: 71,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-8-71',
+                  D: 'Th'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 8,
+                  X: 74,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-8-74',
+                  D: 'Fr'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 8,
+                  X: 77,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-8-77',
+                  D: 'Sa'
+                },
+                { T: 'T', Y: 9, X: 2, C: 'WHITE', I: 'LOW', L: 1, D: '3' },
+                {
+                  T: 'P',
+                  Y: 9,
+                  X: 5,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 13,
+                  N: '0PS-9-5',
+                  D: 'Utilities    '
+                },
+                {
+                  T: 'T',
+                  Y: 9,
+                  X: 19,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 25,
+                  D: 'Perform utility functions'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 9,
+                  X: 60,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 1,
+                  N: '0PS-9-59',
+                  D: '1'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 9,
+                  X: 63,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 1,
+                  N: '0PS-9-62',
+                  D: '2'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 9,
+                  X: 66,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 1,
+                  N: '0PS-9-65',
+                  D: '3'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 9,
+                  X: 69,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 1,
+                  N: '0PS-9-68',
+                  D: '4'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 9,
+                  X: 72,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 1,
+                  N: '0PS-9-71',
+                  D: '5'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 9,
+                  X: 75,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 1,
+                  N: '0PS-9-74',
+                  D: '6'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 9,
+                  X: 78,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 1,
+                  N: '0PS-9-77',
+                  D: '7'
+                },
+                { T: 'T', Y: 10, X: 2, C: 'WHITE', I: 'LOW', L: 1, D: '4' },
+                {
+                  T: 'P',
+                  Y: 10,
+                  X: 5,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 13,
+                  N: '0PS-10-5',
+                  D: 'Foreground   '
+                },
+                {
+                  T: 'T',
+                  Y: 10,
+                  X: 19,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 31,
+                  D: 'Interactive language processing'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 10,
+                  X: 60,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 1,
+                  N: '0PS-10-59',
+                  D: '8'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 10,
+                  X: 63,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 1,
+                  N: '0PS-10-62',
+                  D: '9'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 10,
+                  X: 65,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-10-65',
+                  D: '10',
+                  SHS: [Array]
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 10,
+                  X: 68,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-10-68',
+                  D: '11'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 10,
+                  X: 71,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-10-71',
+                  D: '12'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 10,
+                  X: 74,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-10-74',
+                  D: '13'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 10,
+                  X: 77,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-10-77',
+                  D: '14'
+                },
+                { T: 'T', Y: 11, X: 2, C: 'WHITE', I: 'LOW', L: 1, D: '5' },
+                {
+                  T: 'P',
+                  Y: 11,
+                  X: 5,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 13,
+                  N: '0PS-11-5',
+                  D: 'Batch        '
+                },
+                {
+                  T: 'T',
+                  Y: 11,
+                  X: 19,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 34,
+                  D: 'Submit job for language processing'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 11,
+                  X: 59,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-11-59',
+                  D: '15'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 11,
+                  X: 62,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-11-62',
+                  D: '16'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 11,
+                  X: 65,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-11-65',
+                  D: '17'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 11,
+                  X: 68,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-11-68',
+                  D: '18'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 11,
+                  X: 71,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-11-71',
+                  D: '19'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 11,
+                  X: 74,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-11-74',
+                  D: '20'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 11,
+                  X: 77,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-11-77',
+                  D: '21'
+                },
+                { T: 'T', Y: 12, X: 2, C: 'WHITE', I: 'LOW', L: 1, D: '6' },
+                {
+                  T: 'P',
+                  Y: 12,
+                  X: 5,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 13,
+                  N: '0PS-12-5',
+                  D: 'Command      '
+                },
+                {
+                  T: 'T',
+                  Y: 12,
+                  X: 19,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 33,
+                  D: 'Enter TSO or Workstation commands'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 12,
+                  X: 59,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-12-59',
+                  D: '22'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 12,
+                  X: 62,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-12-62',
+                  D: '23'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 12,
+                  X: 65,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-12-65',
+                  D: '24'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 12,
+                  X: 68,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-12-68',
+                  D: '25'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 12,
+                  X: 71,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-12-71',
+                  D: '26'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 12,
+                  X: 74,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-12-74',
+                  D: '27'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 12,
+                  X: 77,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-12-77',
+                  D: '28'
+                },
+                { T: 'T', Y: 13, X: 2, C: 'WHITE', I: 'LOW', L: 1, D: '7' },
+                {
+                  T: 'P',
+                  Y: 13,
+                  X: 5,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 13,
+                  N: '0PS-13-5',
+                  D: 'Dialog Test  '
+                },
+                {
+                  T: 'T',
+                  Y: 13,
+                  X: 19,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 22,
+                  D: 'Perform dialog testing'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 13,
+                  X: 59,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-13-59',
+                  D: '29'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 13,
+                  X: 62,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-13-62',
+                  D: '30'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 13,
+                  X: 65,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 2,
+                  N: '0PS-13-65',
+                  D: '31'
+                },
+                { T: 'T', Y: 14, X: 2, C: 'WHITE', I: 'LOW', L: 1, D: '9' },
+                {
+                  T: 'P',
+                  Y: 14,
+                  X: 5,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 13,
+                  N: '0PS-14-5',
+                  D: 'IBM Products '
+                },
+                {
+                  T: 'T',
+                  Y: 14,
+                  X: 19,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 32,
+                  D: 'IBM program development products'
+                },
+                { T: 'T', Y: 15, X: 2, C: 'WHITE', I: 'LOW', L: 2, D: '10' },
+                {
+                  T: 'P',
+                  Y: 15,
+                  X: 5,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 13,
+                  N: '0PS-15-5',
+                  D: 'SCLM         '
+                },
+                {
+                  T: 'T',
+                  Y: 15,
+                  X: 19,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 32,
+                  D: 'SW Configuration Library Manager'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 15,
+                  X: 59,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 20,
+                  N: '0PS-15-59',
+                  D: 'Time . . . . : 03:40'
+                },
+                { T: 'T', Y: 16, X: 2, C: 'WHITE', I: 'LOW', L: 2, D: '11' },
+                {
+                  T: 'P',
+                  Y: 16,
+                  X: 5,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 13,
+                  N: '0PS-16-5',
+                  D: 'Workplace    '
+                },
+                {
+                  T: 'T',
+                  Y: 16,
+                  X: 19,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 28,
+                  D: 'ISPF Object/Action Workplace'
+                },
+                {
+                  T: 'P',
+                  A: 'TMPROWS ',
+                  Y: 16,
+                  X: 59,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 20,
+                  N: '0PS-16-59',
+                  D: 'Day of year. :   283'
+                },
+                { T: 'T', Y: 17, X: 2, C: 'WHITE', I: 'LOW', L: 2, D: '12' },
+                {
+                  T: 'P',
+                  Y: 17,
+                  X: 5,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 13,
+                  N: '0PS-17-5',
+                  D: 'z/OS System  '
+                },
+                {
+                  T: 'T',
+                  Y: 17,
+                  X: 19,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 35,
+                  D: 'z/OS system programmer applications'
+                },
+                { T: 'T', Y: 18, X: 2, C: 'WHITE', I: 'LOW', L: 2, D: '13' },
+                {
+                  T: 'P',
+                  Y: 18,
+                  X: 5,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 13,
+                  N: '0PS-18-5',
+                  D: 'z/OS User    '
+                },
+                {
+                  T: 'T',
+                  Y: 18,
+                  X: 19,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 22,
+                  D: 'z/OS user applications'
+                },
+                { T: 'T', Y: 19, X: 2, C: 'WHITE', I: 'LOW', L: 2, D: '14' },
+                {
+                  T: 'P',
+                  Y: 19,
+                  X: 5,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 13,
+                  N: '0PS-19-5',
+                  D: 'OPS/MVS      '
+                },
+                {
+                  T: 'T',
+                  Y: 19,
+                  X: 19,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 10,
+                  D: 'CA OPS MVS'
+                },
+                { T: 'T', Y: 20, X: 2, C: 'WHITE', I: 'LOW', L: 1, D: 'E' },
+                {
+                  T: 'P',
+                  Y: 20,
+                  X: 5,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 13,
+                  N: '0PS-20-5',
+                  D: 'Endevor      '
+                },
+                {
+                  T: 'T',
+                  Y: 20,
+                  X: 19,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 15,
+                  D: 'CA Endevor Menu'
+                },
+                { T: 'T', Y: 21, X: 2, C: 'WHITE', I: 'LOW', L: 1, D: 'S' },
+                {
+                  T: 'P',
+                  Y: 21,
+                  X: 5,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 13,
+                  N: '0PS-21-5',
+                  D: 'SDSF         '
+                },
+                {
+                  T: 'T',
+                  Y: 21,
+                  X: 19,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 37,
+                  D: 'IBM Spool Display and Search Facility'
+                },
+                {
+                  T: 'O',
+                  Y: 23,
+                  X: 2,
+                  C: 'AQUA',
+                  I: 'LOW',
+                  L: 4,
+                  N: 'ZEXI',
+                  D: '    '
+                },
+                { T: 'T', Y: 24, X: 7, C: 'GREEN', I: 'LOW', L: 5, D: 'Enter' },
+                {
+                  T: 'P',
+                  Y: 24,
+                  X: 13,
+                  C: 'AQUA',
+                  I: 'HIGH',
+                  L: 1,
+                  N: '0PS-24-13',
+                  D: 'X'
+                },
+                {
+                  T: 'T',
+                  Y: 24,
+                  X: 15,
+                  C: 'GREEN',
+                  I: 'LOW',
+                  L: 36,
+                  D: 'to Terminate using log/list defaults'
+                }
+              ],
+              KEY: [
+                { K: 'ENTER', N: 'ENTER' },
+                { K: '1', N: 'Help' },
+                { K: '2', N: 'Split' },
+                { K: '3', N: 'Exit' },
+                { K: '7', N: 'Backward' },
+                { K: '8', N: 'Forward' },
+                { K: '9', N: 'Swap' },
+                { K: '10', N: 'Actions' },
+                { K: '12', N: 'Cancel' }
+              ]
+            };
+        console.log(menuData.FLD);
+        //createIspf();
+        
+        function createIspf() {
+            console.log("createISPF started");
+
+            for (let i = 0; i < menuData.FLD.length; i++) {
+                let curField = menuData.FLD[i];
+                let curFieldData = curField.D;
+                let curFieldXPos = curField.X;
+                let curFieldYPos = curField.Y;
+
+                console.log("Data to put in table:" + curFieldData + " at row:" + curFieldYPos + ", and col:" + curFieldXPos);
+
+                // Iterate through curFieldData and update cells
+                for (let k = 0; k < curFieldData.length; k++) {
+                    console.log("k(letter in word)=" + k);
+
+                    if (curFieldData[k] == null) {
+                        console.log("NULL");
+                        // Consider handling null values appropriately here
+                    } else {
+                        // Update cell without going out of bounds
+                        updateCell(curFieldYPos, (curFieldXPos + k), curFieldData[k]);
+                    }
+                } // let k
+            } // let i
+        }
+        
+        /*function createIspf() {
+            console.log("createISPF started");
+            // Iterate through the Fields (FLD) data and update the dynamicTable
+            console.log("menuData.FLD.length=" + menuData.FLD.length);
+            for (let i = 0; i < menuData.FLD.length; i++) {
+                // Get 1 field at a time
+                let curField = menuData.FLD[i];
+                let curFieldColor = curField.C;
+                let curFieldData = curField.D;
+                let curFieldIntensity = curField.I;
+                let curFieldLength = curField.L;
+                let curFieldType = curField.T;
+                let curFieldXPos = curField.X;
+                let curFieldYPos = curField.Y;
+                // Update the table
+                // Start at curField.X and curField.Y and continue until curField.L
+                // updateCell(x,y,content);
+                console.log("data to put in table:" + curFieldData + " at row:" + curFieldYPos + ", and row:" + curFieldXPos);
+                console.log("curFieldXPos=" + curFieldXPos + ", curFieldLength=" + (curFieldLength + curFieldXPos));
+                endFieldXPos = curFieldLength + curFieldXPos
+                for (let j = curFieldXPos; j < endFieldXPos; j++) {
+                    console.log("j:(xPos)=" + j);
+                    // Move one column at a time, one letter at a time
+                    console.log("curFieldData.length=" + curFieldData.length);
+                    for (let k = 0; k < curFieldData.length; k++) {
+                        console.log("k(letter in word)=" + k);
+                        if (curFieldData[k] == null) {
+                            console.log("NULL");
+                        }
+                        //updateCell((j+k), curFieldYPos, curFieldData[k]);
+                        updateCell(curFieldYPos, (j+k), curFieldData[k]);
+                    } // let k
+                } // let j
+            } // let i
+        }*/
+    </script>
+</body>
+</html>
